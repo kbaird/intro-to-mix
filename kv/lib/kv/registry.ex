@@ -44,11 +44,11 @@ defmodule KV.Registry do
     if HashDict.get(state.names, name) do
       {:noreply, state}
     else
-      {:ok, pid} = KV.Bucket.start_link()
+      # 3. Use the buckets supervisor instead of starting buckets directly
+      {:ok, pid} = KV.Bucket.Supervisor.start_bucket(state.buckets)
       ref = Process.monitor(pid)
       refs = HashDict.put(state.refs, ref, name)
       names = HashDict.put(state.names, name, pid)
-      # 3. Push a notification to the event manager on create
       GenEvent.sync_notify(state.events, {:create, name, pid})
       {:noreply, %{state | names: names, refs: refs}}
     end
