@@ -29,14 +29,11 @@ defmodule KV.Registry do
 
   ## Server callbacks
 
-  def init(events) do
-    # 2. The init callback now receives the event manager.
-    #    We have also changed the manager state from a tuple
-    #    to a map, allowing us to add new fields in the future
-    #    without needing to rewrite all callbacks.
+  def init({events, buckets}) do
     names = HashDict.new
     refs  = HashDict.new
-    {:ok, %{names: names, refs: refs, events: events}}
+    # 2. Store the buckets supervisor in the state
+    {:ok, %{names: names, refs: refs, events: events, buckets: buckets}}
   end
 
   def handle_call({:lookup, name}, _from, state) do
