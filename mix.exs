@@ -2,12 +2,12 @@ defmodule KV.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :kv,
-     version: "0.0.1",
-     elixir: "~> 1.0",
-     build_embedded: Mix.env == :prod,
+    [app:             :kv,
+     version:         "0.0.1",
+     elixir:          "~> 1.0",
+     build_embedded:  Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps:            deps()]
   end
 
   # Configuration for the OTP application
@@ -27,7 +27,5 @@ defmodule KV.Mixfile do
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
   # Type `mix help deps` for more examples and options
-  defp deps do
-    []
-  end
+  defp deps, do: []
 end
